@@ -1,27 +1,27 @@
-// Draw the sales history.
+// Draw the sales history table.
 const salesHistoryEmpty = document.getElementById("sales-history-empty");
 const salesHistoryList = document.getElementById("sales-history-list");
 const sessionTotalRow = document.getElementById("session-total-row");
 const sessionTotalAmount = document.getElementById("session-total-amount");
 
+function createHistoryCell(text, className) {
+  const cell = document.createElement("td");
+  cell.textContent = text;
+  if (className !== "") {
+    cell.classList.add(className);
+  }
+  return cell;
+}
+
 function createHistoryLine(sale) {
-  const line = document.createElement("li");
-  line.classList.add("history-line");
-
-  const saleNumberText = document.createElement("span");
-  saleNumberText.classList.add("history-sale-number");
-  saleNumberText.textContent = "#" + sale.saleNumber;
-
-  const saleDetailsText = document.createElement("span");
-  saleDetailsText.classList.add("history-details");
-  saleDetailsText.textContent = formatTime(sale.createdAt) + " - " + formatItemCount(sale.itemCount);
-
-  const saleTotalText = document.createElement("span");
-  saleTotalText.classList.add("history-total");
-  saleTotalText.textContent = formatPrice(sale.finalTotal);
-
-  line.append(saleNumberText, saleDetailsText, saleTotalText);
-  return line;
+  const row = document.createElement("tr");
+  row.append(
+    createHistoryCell("#" + sale.saleNumber, ""),
+    createHistoryCell(formatTime(sale.createdAt), ""),
+    createHistoryCell(sale.itemCount, "col-number"),
+    createHistoryCell(formatPrice(sale.finalTotal), "col-number")
+  );
+  return row;
 }
 
 function renderSalesHistory() {

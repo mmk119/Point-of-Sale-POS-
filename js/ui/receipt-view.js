@@ -13,7 +13,6 @@ const receiptTotalAmount = document.getElementById("receipt-total-amount");
 const receiptAmountPaid = document.getElementById("receipt-amount-paid");
 const receiptChange = document.getElementById("receipt-change");
 const newOrderButton = document.getElementById("new-order-button");
-const posLayout = document.querySelector(".pos-layout");
 
 function createReceiptLine(receiptItem) {
   const line = document.createElement("li");
@@ -65,12 +64,9 @@ function showReceipt(receipt) {
   renderReceiptTotals(receipt);
 
   receiptSection.classList.remove("hidden");
-  // inert stops keyboard users from tabbing to the products behind the receipt.
-  posLayout.inert = true;
   newOrderButton.focus();
 }
 
 function hideReceipt() {
   receiptSection.classList.add("hidden");
-  posLayout.inert = false;
 }

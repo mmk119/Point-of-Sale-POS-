@@ -1,4 +1,4 @@
-// Formatting helpers for money, percentages, dates, times, and item counts.
+// Formatting helpers for money, percentages, dates, and times.
 function roundToCents(amount) {
   return Math.round(amount * 100) / 100;
 }
@@ -22,11 +22,4 @@ function formatTime(date) {
 
 function formatDateTime(date) {
   return date.toLocaleDateString("en-GB") + ", " + formatTime(date);
-}
-
-function formatItemCount(itemCount) {
-  if (itemCount === 1) {
-    return "1 item";
-  }
-  return itemCount + " items";
 }

@@ -1,0 +1,28 @@
+/* Sales history table under the main area. */
+.history-heading {
+  margin-bottom: var(--space-2);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.history-table thead .col-number {
+  text-align: right;
+}
+
+.history-table td {
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.session-total th,
+.session-total td {
+  padding: 8px 10px;
+  border-top: 2px solid var(--color-table-header);
+  font-weight: 700;
+  text-align: left;
+}
+
+.session-total td {
+  border-bottom: none;
+  text-align: right;
+}

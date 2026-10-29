@@ -1,11 +1,11 @@
-// Draw the subtotal, item count, discount, and final amount.
+// Draw the item count, subtotal, discount, final amount, and the amount on the Pay button.
 const itemCountText = document.getElementById("item-count");
 const subtotalAmountText = document.getElementById("subtotal-amount");
 const discountRow = document.getElementById("discount-row");
 const discountLabelText = document.getElementById("discount-label");
 const discountAmountText = document.getElementById("discount-amount");
 const finalAmountText = document.getElementById("final-amount");
-const mobileOrderSummary = document.getElementById("mobile-order-summary");
+const paymentTotalText = document.getElementById("payment-total-amount");
 
 function renderDiscountRow(discount) {
   if (discount === 0) {
@@ -18,6 +18,14 @@ function renderDiscountRow(discount) {
   discountRow.classList.remove("hidden");
 }
 
+function renderPayButtonLabel(itemCount, finalTotal) {
+  if (itemCount === 0) {
+    payButton.textContent = "Pay";
+  } else {
+    payButton.textContent = "Pay " + formatPrice(finalTotal);
+  }
+}
+
 function renderTotals() {
   const currentOrderItems = getOrderItems();
   const itemCount = calculateItemCount(currentOrderItems);
@@ -28,5 +36,7 @@ function renderTotals() {
   subtotalAmountText.textContent = formatPrice(subtotal);
   renderDiscountRow(calculateDiscount(subtotal));
   finalAmountText.textContent = formatPrice(finalTotal);
-  mobileOrderSummary.textContent = formatItemCount(itemCount) + " - " + formatPrice(finalTotal);
+  paymentTotalText.textContent = formatPrice(finalTotal);
+  renderPayButtonLabel(itemCount, finalTotal);
+  updatePaymentLines();
 }

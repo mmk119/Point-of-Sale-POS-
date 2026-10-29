@@ -1,143 +1,162 @@
-/* Order list, quantity buttons, and totals. */
-.empty-order-message {
-  padding: 24px 0;
+/* Order table, totals, payment, and the action bar. */
+.order-table .col-qty {
   text-align: center;
-  color: var(--color-text-muted);
+  white-space: nowrap;
 }
 
+.order-table .col-price,
+.order-table .col-amount {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.order-table .col-remove {
+  width: 44px;
+  text-align: right;
+}
+
+.order-name {
+  overflow-wrap: anywhere;
+}
+
+.quantity-button {
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--color-input-border);
+  border-radius: 0;
+  background-color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter 100ms;
+}
+
+.quantity-button:hover {
+  filter: brightness(0.92);
+}
+
+.order-quantity {
+  display: inline-block;
+  min-width: 28px;
+  text-align: center;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.remove-button {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 0;
+  background-color: var(--color-tile-red);
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  transition: filter 100ms;
+}
+
+.remove-button:hover {
+  filter: brightness(0.9);
+}
+
+/* Totals sit at the bottom of the order column, like the reference screen. */
 .totals {
-  padding-top: 16px;
-  border-top: 1px solid var(--color-border);
+  margin-top: auto;
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--color-grid);
 }
 
 .totals-row {
   display: flex;
   justify-content: space-between;
-  padding: 4px 0;
-}
-
-.totals-final {
-  margin-top: 8px;
-  font-size: 1.25rem;
-  font-weight: 700;
-}
-
-.order-actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-top: 16px;
-}
-
-.order-list {
-  margin-bottom: 16px;
-}
-
-.order-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--color-border);
-}
-
-.order-row:last-child {
-  border-bottom: none;
-}
-
-.order-row-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.order-row-name {
-  font-weight: 600;
-}
-
-.order-row-unit-price {
-  font-size: 0.85rem;
-  color: var(--color-text-muted);
-}
-
-.order-row-controls {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.order-row-quantity {
-  min-width: 24px;
-  text-align: center;
-  font-weight: 600;
-}
-
-.quantity-button {
-  width: 34px;
-  height: 34px;
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  background-color: var(--color-surface);
-  color: var(--color-text);
-  font: inherit;
-  font-size: 1.1rem;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.quantity-button:hover {
-  background-color: var(--color-primary-light);
-  border-color: var(--color-primary);
-}
-
-.remove-button {
-  min-height: 34px;
-  padding: 0 6px;
-  border: none;
-  background: none;
-  color: var(--color-danger);
-  font: inherit;
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.remove-button:hover {
-  color: var(--color-danger-dark);
-  text-decoration: underline;
-}
-
-.quantity-button:focus-visible,
-.remove-button:focus-visible {
-  outline: 3px solid var(--color-primary-dark);
-  outline-offset: 2px;
-}
-
-.order-row-line-total {
-  min-width: 64px;
-  text-align: right;
-  font-weight: 700;
-}
-
-/* On narrow screens the name gets its own line so it is not squeezed by the buttons. */
-@media (max-width: 480px) {
-  .order-row {
-    flex-wrap: wrap;
-  }
-
-  .order-row-info {
-    flex-basis: 100%;
-  }
-
-  .order-row-line-total {
-    margin-left: auto;
-  }
+  padding: 3px 0;
 }
 
 .discount-row {
-  color: var(--color-primary-dark);
+  color: var(--color-tile-green);
   font-weight: 600;
 }
 
+.totals-final {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* Amount paid, the Exact button, and the total to pay, side by side. */
+.payment-area {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 2px;
+  margin-top: 2px;
+}
+
 .amount-paid-field {
-  margin-top: 16px;
+  padding: var(--space-2);
+  border: 1px solid var(--color-grid);
+}
+
+.amount-input {
+  min-height: 48px;
+  font-size: 20px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.payment-area .tile {
+  min-height: 72px;
+}
+
+.payment-total {
+  cursor: default;
+}
+
+.payment-total:hover,
+.payment-total:active {
+  filter: none;
+}
+
+.payment-total-amount {
+  font-size: 22px;
+}
+
+.action-error {
+  padding: var(--space-2) var(--space-4) 0;
+  font-weight: 600;
+}
+
+.action-bar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
+  gap: 2px;
+  margin-top: 2px;
+}
+
+.action-bar .tile {
+  min-height: 64px;
+}
+
+.pay-button {
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 480px) {
+  .order-table .col-price {
+    display: none;
+  }
+
+  .data-table thead th,
+  .data-table td {
+    padding: 6px;
+  }
+
+  .payment-area {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .amount-paid-field {
+    grid-column: 1 / -1;
+  }
 }

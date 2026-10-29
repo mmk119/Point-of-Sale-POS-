@@ -1,39 +1,31 @@
-// Draw the product cards.
+// Draw the product tiles.
 const productGrid = document.getElementById("product-grid");
 const productSearchInput = document.getElementById("product-search");
 const categoryFilterSelect = document.getElementById("category-filter");
 const noProductsMessage = document.getElementById("no-products-message");
 
-function createAddButton(product) {
-  const addButton = document.createElement("button");
-  addButton.type = "button";
-  addButton.classList.add("button", "button-primary", "add-button");
-  addButton.textContent = "Add";
-  addButton.setAttribute("aria-label", "Add " + product.name + " to order");
-  addButton.addEventListener("click", function () {
-    handleAddProduct(product.id);
-  });
-  return addButton;
+function createProductTileText(className, text) {
+  const tileText = document.createElement("span");
+  tileText.classList.add(className);
+  tileText.textContent = text;
+  return tileText;
 }
 
+// The whole tile is one button. The category class, like "tile-dairy", sets its colour.
 function createProductCard(product) {
-  const card = document.createElement("article");
-  card.classList.add("product-card");
+  const tile = document.createElement("button");
+  tile.type = "button";
+  tile.classList.add("tile", "product-tile", "tile-" + product.category.toLowerCase());
+  tile.setAttribute("aria-label", "Add " + product.name + " to order");
+  tile.addEventListener("click", function () {
+    handleAddProduct(product.id);
+  });
 
-  const nameHeading = document.createElement("h3");
-  nameHeading.classList.add("product-name");
-  nameHeading.textContent = product.name;
-
-  const categoryText = document.createElement("p");
-  categoryText.classList.add("product-category");
-  categoryText.textContent = product.category;
-
-  const priceText = document.createElement("p");
-  priceText.classList.add("product-price");
-  priceText.textContent = formatPrice(product.price);
-
-  card.append(nameHeading, categoryText, priceText, createAddButton(product));
-  return card;
+  tile.append(
+    createProductTileText("product-name", product.name),
+    createProductTileText("product-price", formatPrice(product.price))
+  );
+  return tile;
 }
 
 function renderProducts(productList) {
@@ -45,8 +37,8 @@ function renderProducts(productList) {
 
   noProductsMessage.classList.add("hidden");
   for (let index = 0; index < productList.length; index++) {
-    const productCard = createProductCard(productList[index]);
-    productGrid.append(productCard);
+    const productTile = createProductCard(productList[index]);
+    productGrid.append(productTile);
   }
 }
 

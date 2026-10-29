@@ -1,103 +1,121 @@
-/* Page layout and responsive rules. */
-.site-header {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  padding: 16px 24px;
-  background-color: var(--color-primary);
-  color: #ffffff;
-}
-
-.site-header h1 {
-  font-size: 1.5rem;
-}
-
-.site-subtitle {
-  opacity: 0.85;
-}
-
-.pos-layout {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 24px;
-  align-items: start;
-  padding: 24px;
-}
-
-.products-section,
-.order-section,
-.history-section {
-  padding: 20px;
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-}
-
-.products-section h2,
-.order-section h2,
-.history-section h2 {
-  margin-bottom: 16px;
-  font-size: 1.25rem;
-}
-
-/* Keeps the order panel in view while the cashier scrolls the products.
-   If the column is taller than the screen, it scrolls on its own. */
-.side-column {
+/* Page layout, top bar, and responsive rules. */
+body {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  position: sticky;
-  top: 24px;
-  max-height: calc(100vh - 48px);
-  overflow-y: auto;
+  min-height: 100vh;
 }
 
-.mobile-order-bar {
-  display: none;
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  padding: 10px var(--space-4);
+  border-bottom: 1px solid var(--color-grid);
 }
 
-@media (max-width: 768px) {
-  /* Leaves room so the bottom bar never covers the last section. */
-  body {
-    padding-bottom: 64px;
+.top-bar-search {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 1;
+  max-width: 640px;
+}
+
+.top-bar-label {
+  font-weight: 600;
+}
+
+.top-bar-search input {
+  flex: 1;
+  min-width: 0;
+}
+
+.top-bar-search select {
+  width: 160px;
+}
+
+.top-bar-store {
+  text-align: right;
+}
+
+.store-name {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.store-label {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+/* Desktop: the order on the left, products and payment on the right. */
+.pos-main {
+  display: grid;
+  grid-template-columns: 42fr 58fr;
+  grid-template-areas:
+    "order products"
+    "order payment";
+  align-content: start;
+  column-gap: 2px;
+  flex: 1;
+}
+
+.order-section {
+  grid-area: order;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--color-grid);
+}
+
+.products-section {
+  grid-area: products;
+}
+
+.payment-section {
+  grid-area: payment;
+}
+
+.history-section {
+  padding: var(--space-4);
+  border-top: 1px solid var(--color-grid);
+}
+
+/* Tablet and phone: products, then the order, then payment, all in one column. */
+@media (max-width: 999px) {
+  .pos-main {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "products"
+      "order"
+      "payment";
+    row-gap: 2px;
   }
 
-  .mobile-order-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 10;
-    min-height: 56px;
-    padding: 12px 16px;
-    background-color: var(--color-primary);
-    color: #ffffff;
-    font-weight: 600;
-    text-decoration: none;
+  .order-section {
+    border-right: none;
+    border-top: 1px solid var(--color-grid);
+    border-bottom: 1px solid var(--color-grid);
+  }
+}
+
+@media (max-width: 600px) {
+  .top-bar {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: var(--space-2);
   }
 
-  .mobile-order-bar:focus-visible {
-    outline: 3px solid var(--color-text);
-    outline-offset: -3px;
+  .top-bar-search {
+    max-width: none;
   }
 
-  .order-section h2 {
-    scroll-margin-top: 16px;
+  .top-bar-search select {
+    width: auto;
   }
 
-  .pos-layout {
-    grid-template-columns: 1fr;
-    gap: 16px;
-    padding: 16px;
-  }
-
-  .side-column {
-    gap: 16px;
-    position: static;
-    max-height: none;
-    overflow-y: visible;
+  .top-bar-store {
+    text-align: left;
   }
 }

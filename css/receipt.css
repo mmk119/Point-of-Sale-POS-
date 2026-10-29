@@ -1,4 +1,4 @@
-/* Receipt and sales history. */
+/* The receipt shown after a sale. */
 .receipt-overlay {
   position: fixed;
   inset: 0;
@@ -6,47 +6,60 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px;
-  background-color: rgba(15, 23, 42, 0.6);
+  padding: var(--space-4);
+  background-color: rgba(29, 33, 37, 0.55);
 }
 
+/* The only shadow on the page, so the receipt reads as a printed slip. */
 .receipt-card {
   width: 100%;
-  max-width: 380px;
+  max-width: 360px;
   max-height: 100%;
   overflow-y: auto;
-  padding: 24px;
-  background-color: var(--color-surface);
-  border-radius: var(--radius);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  padding: var(--space-5) var(--space-5) 0;
+  background-color: #ffffff;
+  border-radius: 0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  font-family: "Courier New", Courier, monospace;
 }
 
 .receipt-store-name {
   text-align: center;
+  font-size: 18px;
   font-weight: 700;
-  font-size: 1.1rem;
 }
 
 .receipt-heading {
-  margin-bottom: 12px;
   text-align: center;
-  font-size: 0.95rem;
+  font-size: 14px;
   font-weight: 400;
+}
+
+.receipt-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin: var(--space-3) 0 var(--space-2);
+  font-size: 13px;
   color: var(--color-text-muted);
 }
 
 .receipt-list,
 .receipt-totals {
-  padding: 12px 0;
+  padding: var(--space-3) 0;
   border-top: 1px dashed var(--color-text-muted);
-  font-family: "Courier New", Courier, monospace;
+  font-size: 14px;
+}
+
+.receipt-totals {
+  border-bottom: 1px dashed var(--color-text-muted);
 }
 
 .receipt-line,
 .receipt-totals-row {
   display: flex;
   justify-content: space-between;
-  gap: 12px;
+  gap: var(--space-3);
   padding: 2px 0;
 }
 
@@ -55,54 +68,22 @@
   overflow-wrap: anywhere;
 }
 
-.receipt-totals {
-  border-bottom: 1px dashed var(--color-text-muted);
-}
-
 .receipt-final {
-  margin-top: 6px;
-  font-size: 1.2rem;
+  margin: var(--space-1) 0;
+  font-size: 17px;
   font-weight: 700;
 }
 
+.receipt-thanks {
+  margin: var(--space-3) 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+/* A green tile across the bottom of the slip. */
 .receipt-new-order {
-  width: 100%;
-  margin-top: 16px;
-}
-
-.receipt-meta {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
-  font-family: "Courier New", Courier, monospace;
-  font-size: 0.9rem;
-}
-
-.sales-history-empty {
-  color: var(--color-text-muted);
-}
-
-.history-line {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  padding: 6px 0;
-  border-bottom: 1px solid var(--color-border);
-  font-size: 0.9rem;
-}
-
-.history-sale-number {
-  font-weight: 600;
-}
-
-.history-details {
-  flex: 1;
-  color: var(--color-text-muted);
-}
-
-.session-total {
-  display: flex;
-  justify-content: space-between;
-  padding-top: 10px;
-  font-weight: 700;
+  width: calc(100% + 2 * var(--space-5));
+  margin: 0 calc(-1 * var(--space-5));
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
 }

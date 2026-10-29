@@ -1,18 +1,26 @@
-/* Colors as CSS variables, reset, and fonts. */
+/* Colors as CSS variables, reset, fonts, flat tiles, tables, and form fields. */
 :root {
-  --color-primary: #2f855a;
-  --color-primary-dark: #276749;
-  --color-primary-light: #e6f4ea;
-  --color-danger: #c53030;
-  --color-danger-dark: #9b2c2c;
-  --color-background: #f4f5f7;
-  --color-surface: #ffffff;
-  --color-border: #dcdfe4;
-  --color-text: #1f2933;
-  --color-text-muted: #6b7280;
-  --color-disabled-background: #e2e4e8;
-  --color-disabled-text: #9aa0a8;
-  --radius: 8px;
+  --color-page: #ffffff;
+  --color-text: #1d2125;
+  --color-text-muted: #6b6f76;
+  --color-grid: #d0d0d0;
+  --color-input-border: #8a8a8a;
+
+  /* Green, orange and grey are darker than the reference so white text passes WCAG AA. */
+  --color-tile-green: #548235;
+  --color-tile-red: #c00000;
+  --color-tile-orange: #be5711;
+  --color-tile-blue: #2e75b6;
+  --color-tile-dark-blue: #1f4e79;
+  --color-tile-grey: #767676;
+  --color-table-header: #595959;
+  --color-disabled: #e6e6e6;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
 }
 
 *,
@@ -28,97 +36,142 @@ html {
 }
 
 body {
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 1.5;
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.4;
   color: var(--color-text);
-  background-color: var(--color-background);
+  background-color: var(--color-page);
 }
 
 ul {
   list-style: none;
 }
 
-.button {
-  min-height: 44px;
-  padding: 10px 18px;
-  border: 1px solid transparent;
-  border-radius: var(--radius);
+button,
+input,
+select {
   font: inherit;
-  font-weight: 600;
-  cursor: pointer;
+  color: inherit;
 }
 
-.button-primary {
-  background-color: var(--color-primary);
-  color: #ffffff;
+/* Lines up the digits of prices and totals. */
+.amount {
+  font-variant-numeric: tabular-nums;
 }
 
-.button-primary:hover {
-  background-color: var(--color-primary-dark);
-}
-
-.button-danger {
-  background-color: var(--color-danger);
-  color: #ffffff;
-}
-
-.button-danger:hover {
-  background-color: var(--color-danger-dark);
-}
-
-.button:focus-visible {
-  outline: 3px solid var(--color-primary-dark);
+:focus-visible {
+  outline: 2px solid var(--color-text);
   outline-offset: 2px;
 }
 
-.button:disabled {
-  background-color: var(--color-disabled-background);
-  color: var(--color-disabled-text);
+/* !important so .hidden always wins over classes that set display. */
+.hidden {
+  display: none !important;
+}
+
+/* Hidden on screen but still read by screen readers. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Flat square tiles, like the keys on a till. */
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  padding: var(--space-2);
+  border: none;
+  border-radius: 0;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  transition: filter 100ms;
+}
+
+.tile:hover {
+  filter: brightness(0.92);
+}
+
+.tile:active {
+  filter: brightness(0.84);
+}
+
+/* Lifts the focused tile so its outline is not hidden by the next tile. */
+.tile:focus-visible {
+  position: relative;
+  z-index: 1;
+}
+
+.tile-green,
+.tile-fruits {
+  background-color: var(--color-tile-green);
+}
+
+.tile-red {
+  background-color: var(--color-tile-red);
+}
+
+.tile-orange,
+.tile-bakery {
+  background-color: var(--color-tile-orange);
+}
+
+.tile-blue,
+.tile-dairy {
+  background-color: var(--color-tile-blue);
+}
+
+.tile-drinks {
+  background-color: var(--color-tile-dark-blue);
+}
+
+.tile-grey {
+  background-color: var(--color-tile-grey);
+}
+
+.tile:disabled,
+.tile:disabled:hover {
+  background-color: var(--color-disabled);
+  color: var(--color-text-muted);
+  filter: none;
   cursor: not-allowed;
 }
 
-/* !important so .hidden always wins over classes that set display: flex or grid. */
-.hidden {
-  display: none !important;
+.text-input {
+  min-height: 40px;
+  padding: 6px 10px;
+  border: 1px solid var(--color-input-border);
+  border-radius: 0;
+  background-color: #ffffff;
+}
+
+.text-input:disabled {
+  background-color: var(--color-disabled);
+  cursor: not-allowed;
 }
 
 .field {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-}
-
-.field input:disabled {
-  background-color: var(--color-disabled-background);
-  cursor: not-allowed;
+  gap: var(--space-1);
 }
 
 .field label {
-  font-size: 0.85rem;
+  font-size: 13px;
   font-weight: 600;
 }
 
-.field input,
-.field select {
-  width: 100%;
-  min-height: 44px;
-  padding: 8px 12px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  background-color: var(--color-surface);
-  color: var(--color-text);
-  font: inherit;
-}
-
-.field input:focus-visible,
-.field select:focus-visible {
-  outline: 3px solid var(--color-primary);
-  outline-offset: 1px;
-}
-
 .form-message {
-  font-size: 0.9rem;
+  font-size: 14px;
 }
 
 .form-message:empty {
@@ -126,9 +179,40 @@ ul {
 }
 
 .form-message.is-error {
-  color: var(--color-danger);
+  color: var(--color-tile-red);
 }
 
 .form-message.is-success {
-  color: var(--color-primary-dark);
+  color: var(--color-tile-green);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table thead th {
+  padding: 6px 10px;
+  background-color: var(--color-table-header);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.data-table td {
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--color-grid);
+  vertical-align: middle;
+}
+
+.data-table .col-number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.empty-row {
+  padding: var(--space-5) var(--space-3);
+  text-align: center;
+  color: var(--color-text-muted);
 }

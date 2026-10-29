@@ -1,89 +1,84 @@
-/* Product cards, search box, and category filter bar. */
+/* Product tiles and the custom product form. */
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 2px;
 }
 
-.product-card {
-  display: flex;
-  flex-direction: column;
-  padding: 16px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  background-color: var(--color-surface);
+.product-tile {
+  min-height: 72px;
 }
 
 .product-name {
-  font-size: 1rem;
-  font-weight: 700;
-}
-
-.product-category {
-  font-size: 0.85rem;
-  color: var(--color-text-muted);
+  display: block;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
 }
 
 .product-price {
-  margin: 8px 0 12px;
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--color-primary-dark);
-}
-
-.add-button {
-  width: 100%;
-  margin-top: auto;
-}
-
-.product-filters {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 12px;
-  margin-bottom: 16px;
+  display: block;
+  margin-top: 2px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
 
 .no-products-message {
-  padding: 24px 0;
+  padding: var(--space-4);
   text-align: center;
   color: var(--color-text-muted);
 }
 
+.custom-product {
+  margin-top: 2px;
+}
+
+/* The summary looks like one blue tile, the same width as a product tile. */
+.custom-product summary {
+  width: calc((100% - 6px) / 4);
+  min-height: 72px;
+  list-style: none;
+}
+
+.custom-product summary::-webkit-details-marker {
+  display: none;
+}
+
 .custom-product-form {
-  margin-top: 24px;
-  padding-top: 16px;
-  border-top: 1px solid var(--color-border);
-}
-
-.custom-product-heading {
-  margin-bottom: 12px;
-  font-size: 1rem;
-}
-
-.custom-product-fields {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr auto;
-  gap: 12px;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr) auto;
+  gap: var(--space-2);
   align-items: end;
+  margin-top: 2px;
+  padding: var(--space-3);
+  border: 1px solid var(--color-grid);
+}
+
+.custom-product-submit {
+  min-height: 40px;
+  padding: 0 var(--space-4);
 }
 
 .custom-product-form .form-message {
-  margin-top: 8px;
+  grid-column: 1 / -1;
 }
 
-@media (max-width: 768px) {
-  .custom-product-fields {
+@media (max-width: 999px) {
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .custom-product summary {
+    width: calc((100% - 2px) / 2);
+  }
+}
+
+@media (max-width: 600px) {
+  .custom-product-form {
     grid-template-columns: 1fr 1fr;
   }
 
-  .custom-product-fields .field:first-child,
-  .custom-product-fields .button {
+  .custom-product-form .field:first-child,
+  .custom-product-submit {
     grid-column: 1 / -1;
-  }
-}
-
-@media (max-width: 480px) {
-  .product-filters {
-    grid-template-columns: 1fr;
   }
 }

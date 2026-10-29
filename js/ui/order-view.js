@@ -1,4 +1,4 @@
-// Draw the order rows and the empty order message.
+// Draw the order table rows and the empty order row.
 const orderList = document.getElementById("order-list");
 const emptyOrderMessage = document.getElementById("empty-order-message");
 const clearOrderButton = document.getElementById("clear-order-button");
@@ -8,7 +8,7 @@ function createDecreaseButton(orderItem) {
   const decreaseButton = document.createElement("button");
   decreaseButton.type = "button";
   decreaseButton.classList.add("quantity-button");
-  decreaseButton.textContent = "-";
+  decreaseButton.textContent = "−";
   decreaseButton.setAttribute("aria-label", "Decrease quantity of " + orderItem.name);
   decreaseButton.addEventListener("click", function () {
     handleDecrease(orderItem.productId);
@@ -32,7 +32,7 @@ function createRemoveButton(orderItem) {
   const removeButton = document.createElement("button");
   removeButton.type = "button";
   removeButton.classList.add("remove-button");
-  removeButton.textContent = "Remove";
+  removeButton.textContent = "×";
   removeButton.setAttribute("aria-label", "Remove " + orderItem.name);
   removeButton.addEventListener("click", function () {
     handleRemove(orderItem.productId);
@@ -40,48 +40,41 @@ function createRemoveButton(orderItem) {
   return removeButton;
 }
 
-function createQuantityControls(orderItem) {
-  const rowControls = document.createElement("div");
-  rowControls.classList.add("order-row-controls");
-
-  const quantityText = document.createElement("span");
-  quantityText.classList.add("order-row-quantity");
-  quantityText.textContent = orderItem.quantity;
-
-  rowControls.append(
-    createDecreaseButton(orderItem),
-    quantityText,
-    createIncreaseButton(orderItem),
-    createRemoveButton(orderItem)
-  );
-  return rowControls;
+function createOrderCell(className, text) {
+  const cell = document.createElement("td");
+  cell.classList.add(className);
+  cell.textContent = text;
+  return cell;
 }
 
-function createOrderRowInfo(orderItem) {
-  const rowInfo = document.createElement("div");
-  rowInfo.classList.add("order-row-info");
+function createQuantityCell(orderItem) {
+  const cell = document.createElement("td");
+  cell.classList.add("col-qty");
 
-  const nameText = document.createElement("p");
-  nameText.classList.add("order-row-name");
-  nameText.textContent = orderItem.name;
+  const quantityText = document.createElement("span");
+  quantityText.classList.add("order-quantity");
+  quantityText.textContent = orderItem.quantity;
 
-  const unitPriceText = document.createElement("p");
-  unitPriceText.classList.add("order-row-unit-price");
-  unitPriceText.textContent = formatPrice(orderItem.price) + " each";
+  cell.append(createDecreaseButton(orderItem), quantityText, createIncreaseButton(orderItem));
+  return cell;
+}
 
-  rowInfo.append(nameText, unitPriceText);
-  return rowInfo;
+function createRemoveCell(orderItem) {
+  const cell = document.createElement("td");
+  cell.classList.add("col-remove");
+  cell.append(createRemoveButton(orderItem));
+  return cell;
 }
 
 function createOrderRow(orderItem) {
-  const row = document.createElement("li");
-  row.classList.add("order-row");
-
-  const lineTotalText = document.createElement("span");
-  lineTotalText.classList.add("order-row-line-total");
-  lineTotalText.textContent = formatPrice(calculateLineTotal(orderItem));
-
-  row.append(createOrderRowInfo(orderItem), createQuantityControls(orderItem), lineTotalText);
+  const row = document.createElement("tr");
+  row.append(
+    createOrderCell("order-name", orderItem.name),
+    createQuantityCell(orderItem),
+    createOrderCell("col-price", formatPrice(orderItem.price)),
+    createOrderCell("col-amount", formatPrice(calculateLineTotal(orderItem))),
+    createRemoveCell(orderItem)
+  );
   return row;
 }
 
