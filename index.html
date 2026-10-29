@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FreshCart Market POS</title>
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/products.css">
+  <link rel="stylesheet" href="css/order.css">
+  <link rel="stylesheet" href="css/receipt.css">
+
+  <script src="js/config.js" defer></script>
+  <script src="js/data/products.js" defer></script>
+  <script src="js/utils/format.js" defer></script>
+  <script src="js/logic/order.js" defer></script>
+  <script src="js/logic/calculations.js" defer></script>
+  <script src="js/logic/product-search.js" defer></script>
+  <script src="js/logic/sales-history.js" defer></script>
+  <script src="js/ui/products-view.js" defer></script>
+  <script src="js/ui/order-view.js" defer></script>
+  <script src="js/ui/totals-view.js" defer></script>
+  <script src="js/ui/receipt-view.js" defer></script>
+  <script src="js/ui/custom-product-form.js" defer></script>
+  <script src="js/ui/history-view.js" defer></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <h1 id="store-name">FreshCart Market</h1>
+    <p class="site-subtitle">Point of Sale</p>
+  </header>
+
+  <main class="pos-layout">
+    <section class="products-section" aria-labelledby="products-heading">
+      <h2 id="products-heading">Products</h2>
+      <div id="product-grid" class="product-grid"></div>
+    </section>
+
+    <section class="order-section" aria-labelledby="order-heading">
+      <h2 id="order-heading">Current Order</h2>
+      <p id="empty-order-message" class="empty-order-message">No products in the order yet.</p>
+      <ul id="order-list" class="order-list"></ul>
+
+      <div class="totals">
+        <p class="totals-row">
+          <span>Items</span>
+          <span id="item-count">0</span>
+        </p>
+        <p class="totals-row">
+          <span>Subtotal</span>
+          <span id="subtotal-amount">$0.00</span>
+        </p>
+        <p class="totals-row totals-final">
+          <span>Total to pay</span>
+          <span id="final-amount">$0.00</span>
+        </p>
+      </div>
+
+      <div class="order-actions">
+        <button type="button" id="clear-order-button" class="button button-secondary" disabled>Clear Order</button>
+        <button type="button" id="pay-button" class="button button-primary" disabled>Pay</button>
+      </div>
+    </section>
+  </main>
+
+  <section id="receipt-section" class="receipt-section" aria-labelledby="receipt-heading" hidden>
+    <h2 id="receipt-heading">Receipt</h2>
+    <ul id="receipt-list" class="receipt-list"></ul>
+    <p class="receipt-total">
+      <span>Total paid</span>
+      <span id="receipt-total-amount">$0.00</span>
+    </p>
+    <button type="button" id="new-order-button" class="button button-primary">Start New Order</button>
+  </section>
+</body>
+</html>
