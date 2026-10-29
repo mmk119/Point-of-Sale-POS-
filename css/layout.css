@@ -1,1 +1,57 @@
 /* Page layout and responsive rules. */
+.site-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 16px 24px;
+  background-color: var(--color-primary);
+  color: #ffffff;
+}
+
+.site-header h1 {
+  font-size: 1.5rem;
+}
+
+.site-subtitle {
+  opacity: 0.85;
+}
+
+.pos-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  align-items: start;
+  padding: 24px;
+}
+
+.products-section,
+.order-section {
+  padding: 20px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.products-section h2,
+.order-section h2 {
+  margin-bottom: 16px;
+  font-size: 1.25rem;
+}
+
+/* Keeps the order panel in view while the cashier scrolls the products. */
+.order-section {
+  position: sticky;
+  top: 24px;
+}
+
+@media (max-width: 768px) {
+  .pos-layout {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .order-section {
+    position: static;
+  }
+}

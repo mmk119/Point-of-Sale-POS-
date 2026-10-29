@@ -1,1 +1,5 @@
 // Constants: STORE_NAME, DISCOUNT_THRESHOLD, DISCOUNT_RATE, CURRENCY.
+const STORE_NAME = "FreshCart Market";
+const CURRENCY = "$";
+const DISCOUNT_THRESHOLD = 100;
+const DISCOUNT_RATE = 0.1;

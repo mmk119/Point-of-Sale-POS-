@@ -1,1 +1,30 @@
 /* Order list, quantity buttons, and totals. */
+.empty-order-message {
+  padding: 24px 0;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.totals {
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+}
+
+.totals-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+}
+
+.totals-final {
+  margin-top: 8px;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.order-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
