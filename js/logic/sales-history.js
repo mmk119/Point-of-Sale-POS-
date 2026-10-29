@@ -1,8 +1,11 @@
 // Save and read completed sales for the current session.
 let completedSales = [];
 
+function getNextSaleNumber() {
+  return completedSales.length + 1;
+}
+
 function saveSale(receipt) {
-  receipt.saleNumber = completedSales.length + 1;
   completedSales.push(receipt);
 }
 

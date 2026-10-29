@@ -1,99 +1,4 @@
-// Select buttons, connect events, and start the app.
-const storeNameHeading = document.getElementById("store-name");
-
-// Clearing the error here stops an old "at least $X" message staying after the total changes.
-function refreshOrderPanel() {
-  renderOrder();
-  renderTotals();
-  updateOrderButtons();
-  clearAmountPaidError();
-}
-
-function renderStoreName() {
-  storeNameHeading.textContent = STORE_NAME;
-  document.title = STORE_NAME + " POS";
-}
-
-function handleAddProduct(productId) {
-  addProductToOrder(productId);
-  refreshOrderPanel();
-}
-
-function handleIncrease(productId) {
-  increaseQuantity(productId);
-  refreshOrderPanel();
-}
-
-function handleDecrease(productId) {
-  decreaseQuantity(productId);
-  refreshOrderPanel();
-}
-
-function handleRemove(productId) {
-  removeFromOrder(productId);
-  refreshOrderPanel();
-}
-
-function handleClearOrder() {
-  const shouldClear = confirm("Clear the whole order?");
-  if (!shouldClear) {
-    return;
-  }
-
-  clearOrder();
-  clearAmountPaidForm();
-  refreshOrderPanel();
-}
-
-// Returns the amount paid, or null after showing an error if it is missing or too low.
-function readAmountPaid() {
-  const finalTotal = calculateFinalTotal(getOrderItems());
-  const amountPaid = getAmountPaidInputValue();
-
-  if (amountPaid === null || !isAmountPaidEnough(amountPaid, finalTotal)) {
-    showAmountPaidError("Amount paid must be at least " + formatPrice(finalTotal));
-    return null;
-  }
-  return amountPaid;
-}
-
-function handlePay() {
-  if (getOrderItems().length === 0) {
-    return;
-  }
-
-  const amountPaid = readAmountPaid();
-  if (amountPaid === null) {
-    return;
-  }
-
-  const receipt = createReceipt(amountPaid);
-  saveSale(receipt);
-  showReceipt(receipt);
-  clearOrder();
-  clearAmountPaidForm();
-  refreshOrderPanel();
-  renderSalesHistory();
-}
-
-function handleNewOrder() {
-  hideReceipt();
-}
-
-function handleCustomProductSubmit(event) {
-  event.preventDefault();
-  const customProduct = readCustomProductForm();
-  const errorMessage = getCustomProductError(customProduct.name, customProduct.price);
-  if (errorMessage !== "") {
-    showCustomProductMessage(errorMessage, true);
-    return;
-  }
-
-  addCustomProduct(customProduct.name, customProduct.price, customProduct.category);
-  resetCustomProductForm();
-  showCustomProductMessage("Product added.", false);
-  updateProductList();
-}
+// Connect events and start the app.
 
 // These elements are selected at the top of the UI files.
 function connectEvents() {
@@ -108,6 +13,9 @@ function connectEvents() {
   });
   categoryFilterSelect.addEventListener("change", function () {
     updateProductList();
+  });
+  newOrderButton.addEventListener("click", function () {
+    handleNewOrder();
   });
   customProductForm.addEventListener("submit", function (event) {
     handleCustomProductSubmit(event);

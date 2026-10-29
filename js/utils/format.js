@@ -1,4 +1,4 @@
-// Formatting helpers: formatPrice and formatDateTime.
+// Formatting helpers for money, percentages, dates, times, and item counts.
 function roundToCents(amount) {
   return Math.round(amount * 100) / 100;
 }
@@ -10,6 +10,10 @@ function formatPrice(amount) {
 
 function formatPercent(rate) {
   return Math.round(rate * 100) + "%";
+}
+
+function formatDiscountLabel() {
+  return "Discount (" + formatPercent(DISCOUNT_RATE) + ")";
 }
 
 function formatTime(date) {

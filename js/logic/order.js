@@ -77,34 +77,3 @@ function removeFromOrder(productId) {
 function clearOrder() {
   orderItems = [];
 }
-
-// Copy each item so the receipt stays correct after the order is cleared.
-function copyOrderItems() {
-  const copiedItems = [];
-  for (let index = 0; index < orderItems.length; index++) {
-    copiedItems.push({
-      productId: orderItems[index].productId,
-      name: orderItems[index].name,
-      price: orderItems[index].price,
-      quantity: orderItems[index].quantity
-    });
-  }
-  return copiedItems;
-}
-
-function createReceipt(amountPaid) {
-  const receiptItems = copyOrderItems();
-  const subtotal = calculateSubtotal(receiptItems);
-  const finalTotal = calculateFinalTotal(receiptItems);
-
-  return {
-    items: receiptItems,
-    itemCount: calculateItemCount(receiptItems),
-    subtotal: subtotal,
-    discount: calculateDiscount(subtotal),
-    finalTotal: finalTotal,
-    amountPaid: amountPaid,
-    change: calculateChange(amountPaid, finalTotal),
-    createdAt: new Date()
-  };
-}

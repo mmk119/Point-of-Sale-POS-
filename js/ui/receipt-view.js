@@ -15,10 +15,6 @@ const receiptChange = document.getElementById("receipt-change");
 const newOrderButton = document.getElementById("new-order-button");
 const posLayout = document.querySelector(".pos-layout");
 
-newOrderButton.addEventListener("click", function () {
-  handleNewOrder();
-});
-
 function createReceiptLine(receiptItem) {
   const line = document.createElement("li");
   line.classList.add("receipt-line");
@@ -47,7 +43,7 @@ function renderReceiptDiscount(discount) {
     return;
   }
 
-  receiptDiscountLabel.textContent = "Discount (" + formatPercent(DISCOUNT_RATE) + ")";
+  receiptDiscountLabel.textContent = formatDiscountLabel();
   receiptDiscount.textContent = "-" + formatPrice(discount);
   receiptDiscountRow.classList.remove("hidden");
 }

@@ -3,8 +3,6 @@ const orderList = document.getElementById("order-list");
 const emptyOrderMessage = document.getElementById("empty-order-message");
 const clearOrderButton = document.getElementById("clear-order-button");
 const payButton = document.getElementById("pay-button");
-const amountPaidInput = document.getElementById("amount-paid-input");
-const amountPaidError = document.getElementById("amount-paid-error");
 
 function createDecreaseButton(orderItem) {
   const decreaseButton = document.createElement("button");
@@ -107,32 +105,4 @@ function updateOrderButtons() {
   const isOrderEmpty = getOrderItems().length === 0;
   clearOrderButton.disabled = isOrderEmpty;
   payButton.disabled = isOrderEmpty;
-  amountPaidInput.disabled = isOrderEmpty;
-}
-
-// Returns the typed amount as a number, or null if the box is empty or not a number.
-function getAmountPaidInputValue() {
-  const amountText = amountPaidInput.value.trim();
-  if (amountText === "") {
-    return null;
-  }
-
-  const amountPaid = Number(amountText);
-  if (isNaN(amountPaid)) {
-    return null;
-  }
-  return amountPaid;
-}
-
-function showAmountPaidError(message) {
-  amountPaidError.textContent = message;
-}
-
-function clearAmountPaidError() {
-  amountPaidError.textContent = "";
-}
-
-function clearAmountPaidForm() {
-  amountPaidInput.value = "";
-  clearAmountPaidError();
 }

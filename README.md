@@ -63,24 +63,30 @@ css/
   order.css                order list, quantity buttons, totals
   receipt.css              receipt and sales history
 js/
-  config.js                fixed values such as store name and discount rules
-  data/products.js         the product list
-  utils/format.js          price, date, and time formatting
-  logic/order.js           the current order and the receipt
-  logic/calculations.js    line totals, subtotal, discount, final total, change
-  logic/product-search.js  search by name and filter by category
-  logic/custom-product.js  creating custom products
-  logic/sales-history.js   completed sales for this session
-  ui/products-view.js      draws the product cards
-  ui/order-view.js         draws the order rows and reads the amount paid
-  ui/totals-view.js        draws the totals
-  ui/receipt-view.js       shows and hides the receipt
-  ui/custom-product-form.js reads and validates the custom product form
-  ui/history-view.js       draws the sales history
-  main.js                  connects the events and starts the app
+  config.js                          fixed values such as store name and discount rules
+  data/products.js                   the product list
+  utils/format.js                    money, percent, date, time, and item count formatting
+  logic/order.js                     the current order: add, change, remove, clear
+  logic/calculations.js              line totals, subtotal, discount, final total, change
+  logic/product-search.js            search by name and filter by category
+  logic/custom-product.js            validate and create custom products
+  logic/sales-history.js             completed sales for this session
+  logic/receipt.js                   builds the receipt object for a sale
+  ui/header-view.js                  shows the store name in the header and tab title
+  ui/products-view.js                draws the product cards
+  ui/order-view.js                   draws the order rows and the Clear Order and Pay buttons
+  ui/payment-view.js                 reads the amount paid and shows payment errors
+  ui/totals-view.js                  draws the totals
+  ui/receipt-view.js                 shows and hides the receipt
+  ui/custom-product-form.js          reads the custom product form and shows its message
+  ui/history-view.js                 draws the sales history
+  handlers/order-handlers.js         what happens when the order is changed or cleared
+  handlers/payment-handlers.js       what happens when the cashier pays or starts a new order
+  handlers/custom-product-handlers.js what happens when a custom product is submitted
+  main.js                            connects the events and starts the app
 ```
 
-Logic files only work with data and never touch the page. UI files only read from and draw on the page, and they call logic functions for any calculation or change to the data. The scripts are plain script tags loaded in order, so the project runs straight from the file system.
+Logic files only work with data and never touch the page. UI files only read from and draw on the page. Handler files connect the two: when the cashier does something, a handler calls the logic to change the data and then the UI to redraw the page. The scripts are plain script tags loaded in order, so the project runs straight from the file system.
 
 ## Author
 

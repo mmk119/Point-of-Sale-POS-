@@ -13,7 +13,7 @@ function renderDiscountRow(discount) {
     return;
   }
 
-  discountLabelText.textContent = "Discount (" + formatPercent(DISCOUNT_RATE) + ")";
+  discountLabelText.textContent = formatDiscountLabel();
   discountAmountText.textContent = "-" + formatPrice(discount);
   discountRow.classList.remove("hidden");
 }
