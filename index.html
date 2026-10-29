@@ -65,14 +65,27 @@
     </section>
   </main>
 
-  <section id="receipt-section" class="receipt-section" aria-labelledby="receipt-heading" hidden>
-    <h2 id="receipt-heading">Receipt</h2>
-    <ul id="receipt-list" class="receipt-list"></ul>
-    <p class="receipt-total">
-      <span>Total paid</span>
-      <span id="receipt-total-amount">$0.00</span>
-    </p>
-    <button type="button" id="new-order-button" class="button button-primary">Start New Order</button>
+  <section id="receipt-section" class="receipt-overlay hidden">
+    <div class="receipt-card" role="dialog" aria-modal="true" aria-labelledby="receipt-heading">
+      <p id="receipt-store-name" class="receipt-store-name"></p>
+      <h2 id="receipt-heading" class="receipt-heading">Receipt</h2>
+      <ul id="receipt-list" class="receipt-list"></ul>
+      <div class="receipt-totals">
+        <p class="receipt-totals-row">
+          <span>Items</span>
+          <span id="receipt-item-count">0</span>
+        </p>
+        <p class="receipt-totals-row">
+          <span>Subtotal</span>
+          <span id="receipt-subtotal">$0.00</span>
+        </p>
+        <p class="receipt-totals-row receipt-final">
+          <span>Total to pay</span>
+          <span id="receipt-total-amount">$0.00</span>
+        </p>
+      </div>
+      <button type="button" id="new-order-button" class="button button-primary receipt-new-order">New Order</button>
+    </div>
   </section>
 </body>
 </html>

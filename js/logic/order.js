@@ -73,3 +73,27 @@ function removeFromOrder(productId) {
   }
   orderItems.splice(orderItemIndex, 1);
 }
+
+function clearOrder() {
+  orderItems = [];
+}
+
+function createReceipt() {
+  // Copy each item so the receipt stays correct after the order is cleared.
+  const receiptItems = [];
+  for (let index = 0; index < orderItems.length; index++) {
+    receiptItems.push({
+      productId: orderItems[index].productId,
+      name: orderItems[index].name,
+      price: orderItems[index].price,
+      quantity: orderItems[index].quantity
+    });
+  }
+
+  return {
+    items: receiptItems,
+    itemCount: calculateItemCount(receiptItems),
+    subtotal: calculateSubtotal(receiptItems),
+    finalTotal: calculateFinalTotal(receiptItems)
+  };
+}
