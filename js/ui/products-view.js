@@ -1,5 +1,20 @@
 // Draw the product cards.
 const productGrid = document.getElementById("product-grid");
+const productSearchInput = document.getElementById("product-search");
+const categoryFilterSelect = document.getElementById("category-filter");
+const noProductsMessage = document.getElementById("no-products-message");
+
+function createAddButton(product) {
+  const addButton = document.createElement("button");
+  addButton.type = "button";
+  addButton.classList.add("button", "button-primary", "add-button");
+  addButton.textContent = "Add";
+  addButton.setAttribute("aria-label", "Add " + product.name + " to order");
+  addButton.addEventListener("click", function () {
+    handleAddProduct(product.id);
+  });
+  return addButton;
+}
 
 function createProductCard(product) {
   const card = document.createElement("article");
@@ -17,22 +32,25 @@ function createProductCard(product) {
   priceText.classList.add("product-price");
   priceText.textContent = formatPrice(product.price);
 
-  const addButton = document.createElement("button");
-  addButton.type = "button";
-  addButton.classList.add("button", "button-primary", "add-button");
-  addButton.textContent = "Add";
-  addButton.addEventListener("click", function () {
-    handleAddProduct(product.id);
-  });
-
-  card.append(nameHeading, categoryText, priceText, addButton);
+  card.append(nameHeading, categoryText, priceText, createAddButton(product));
   return card;
 }
 
 function renderProducts(productList) {
   productGrid.innerHTML = "";
+  if (productList.length === 0) {
+    noProductsMessage.classList.remove("hidden");
+    return;
+  }
+
+  noProductsMessage.classList.add("hidden");
   for (let index = 0; index < productList.length; index++) {
     const productCard = createProductCard(productList[index]);
     productGrid.append(productCard);
   }
+}
+
+function updateProductList() {
+  const visibleProducts = getVisibleProducts(productSearchInput.value, categoryFilterSelect.value);
+  renderProducts(visibleProducts);
 }

@@ -19,7 +19,23 @@ function calculateItemCount(orderItems) {
   return itemCount;
 }
 
+function calculateDiscount(subtotal) {
+  if (roundToCents(subtotal) > DISCOUNT_THRESHOLD) {
+    return roundToCents(subtotal * DISCOUNT_RATE);
+  }
+  return 0;
+}
+
 function calculateFinalTotal(orderItems) {
-  // The discount will be applied here in the discount bonus phase.
-  return calculateSubtotal(orderItems);
+  const subtotal = calculateSubtotal(orderItems);
+  const discount = calculateDiscount(subtotal);
+  return roundToCents(subtotal - discount);
+}
+
+function calculateChange(amountPaid, finalTotal) {
+  return roundToCents(amountPaid - finalTotal);
+}
+
+function isAmountPaidEnough(amountPaid, finalTotal) {
+  return roundToCents(amountPaid) >= roundToCents(finalTotal);
 }

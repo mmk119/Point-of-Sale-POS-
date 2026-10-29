@@ -23,6 +23,10 @@
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   font-size: 16px;
@@ -74,6 +78,57 @@ ul {
   cursor: not-allowed;
 }
 
+/* !important so .hidden always wins over classes that set display: flex or grid. */
 .hidden {
+  display: none !important;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.field input:disabled {
+  background-color: var(--color-disabled-background);
+  cursor: not-allowed;
+}
+
+.field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.field input:focus-visible,
+.field select:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 1px;
+}
+
+.form-message {
+  font-size: 0.9rem;
+}
+
+.form-message:empty {
   display: none;
+}
+
+.form-message.is-error {
+  color: var(--color-danger);
+}
+
+.form-message.is-success {
+  color: var(--color-primary-dark);
 }

@@ -1,8 +1,17 @@
 // Select buttons, connect events, and start the app.
+const storeNameHeading = document.getElementById("store-name");
+
+// Clearing the error here stops an old "at least $X" message staying after the total changes.
 function refreshOrderPanel() {
   renderOrder();
   renderTotals();
   updateOrderButtons();
+  clearAmountPaidError();
+}
+
+function renderStoreName() {
+  storeNameHeading.textContent = STORE_NAME;
+  document.title = STORE_NAME + " POS";
 }
 
 function handleAddProduct(productId) {
@@ -26,8 +35,26 @@ function handleRemove(productId) {
 }
 
 function handleClearOrder() {
+  const shouldClear = confirm("Clear the whole order?");
+  if (!shouldClear) {
+    return;
+  }
+
   clearOrder();
+  clearAmountPaidForm();
   refreshOrderPanel();
+}
+
+// Returns the amount paid, or null after showing an error if it is missing or too low.
+function readAmountPaid() {
+  const finalTotal = calculateFinalTotal(getOrderItems());
+  const amountPaid = getAmountPaidInputValue();
+
+  if (amountPaid === null || !isAmountPaidEnough(amountPaid, finalTotal)) {
+    showAmountPaidError("Amount paid must be at least " + formatPrice(finalTotal));
+    return null;
+  }
+  return amountPaid;
 }
 
 function handlePay() {
@@ -35,30 +62,64 @@ function handlePay() {
     return;
   }
 
-  const receipt = createReceipt();
+  const amountPaid = readAmountPaid();
+  if (amountPaid === null) {
+    return;
+  }
+
+  const receipt = createReceipt(amountPaid);
+  saveSale(receipt);
   showReceipt(receipt);
   clearOrder();
+  clearAmountPaidForm();
   refreshOrderPanel();
+  renderSalesHistory();
 }
 
 function handleNewOrder() {
   hideReceipt();
 }
 
-// clearOrderButton and payButton are selected in order-view.js.
-function connectOrderButtons() {
+function handleCustomProductSubmit(event) {
+  event.preventDefault();
+  const customProduct = readCustomProductForm();
+  const errorMessage = getCustomProductError(customProduct.name, customProduct.price);
+  if (errorMessage !== "") {
+    showCustomProductMessage(errorMessage, true);
+    return;
+  }
+
+  addCustomProduct(customProduct.name, customProduct.price, customProduct.category);
+  resetCustomProductForm();
+  showCustomProductMessage("Product added.", false);
+  updateProductList();
+}
+
+// These elements are selected at the top of the UI files.
+function connectEvents() {
   clearOrderButton.addEventListener("click", function () {
     handleClearOrder();
   });
   payButton.addEventListener("click", function () {
     handlePay();
   });
+  productSearchInput.addEventListener("input", function () {
+    updateProductList();
+  });
+  categoryFilterSelect.addEventListener("change", function () {
+    updateProductList();
+  });
+  customProductForm.addEventListener("submit", function (event) {
+    handleCustomProductSubmit(event);
+  });
 }
 
 function startApp() {
-  renderProducts(products);
+  renderStoreName();
+  updateProductList();
   refreshOrderPanel();
-  connectOrderButtons();
+  renderSalesHistory();
+  connectEvents();
 }
 
 startApp();

@@ -25,7 +25,8 @@
 }
 
 .products-section,
-.order-section {
+.order-section,
+.history-section {
   padding: 20px;
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -33,25 +34,70 @@
 }
 
 .products-section h2,
-.order-section h2 {
+.order-section h2,
+.history-section h2 {
   margin-bottom: 16px;
   font-size: 1.25rem;
 }
 
-/* Keeps the order panel in view while the cashier scrolls the products. */
-.order-section {
+/* Keeps the order panel in view while the cashier scrolls the products.
+   If the column is taller than the screen, it scrolls on its own. */
+.side-column {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
   position: sticky;
   top: 24px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+}
+
+.mobile-order-bar {
+  display: none;
 }
 
 @media (max-width: 768px) {
+  /* Leaves room so the bottom bar never covers the last section. */
+  body {
+    padding-bottom: 64px;
+  }
+
+  .mobile-order-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    min-height: 56px;
+    padding: 12px 16px;
+    background-color: var(--color-primary);
+    color: #ffffff;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .mobile-order-bar:focus-visible {
+    outline: 3px solid var(--color-text);
+    outline-offset: -3px;
+  }
+
+  .order-section h2 {
+    scroll-margin-top: 16px;
+  }
+
   .pos-layout {
     grid-template-columns: 1fr;
     gap: 16px;
     padding: 16px;
   }
 
-  .order-section {
+  .side-column {
+    gap: 16px;
     position: static;
+    max-height: none;
+    overflow-y: visible;
   }
 }

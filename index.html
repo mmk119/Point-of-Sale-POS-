@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Point of Sale page for a supermarket checkout, built with HTML, CSS, and vanilla JavaScript.">
   <title>FreshCart Market POS</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
 
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/layout.css">
@@ -17,6 +19,7 @@
   <script src="js/logic/order.js" defer></script>
   <script src="js/logic/calculations.js" defer></script>
   <script src="js/logic/product-search.js" defer></script>
+  <script src="js/logic/custom-product.js" defer></script>
   <script src="js/logic/sales-history.js" defer></script>
   <script src="js/ui/products-view.js" defer></script>
   <script src="js/ui/order-view.js" defer></script>
@@ -35,40 +38,117 @@
   <main class="pos-layout">
     <section class="products-section" aria-labelledby="products-heading">
       <h2 id="products-heading">Products</h2>
+
+      <div class="product-filters">
+        <div class="field">
+          <label for="product-search">Search products</label>
+          <input type="search" id="product-search" placeholder="Search by name" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="category-filter">Category</label>
+          <!-- The "All" value must match ALL_CATEGORIES in config.js. -->
+          <select id="category-filter">
+            <option value="All">All</option>
+            <option value="Dairy">Dairy</option>
+            <option value="Bakery">Bakery</option>
+            <option value="Fruits">Fruits</option>
+            <option value="Drinks">Drinks</option>
+          </select>
+        </div>
+      </div>
+
       <div id="product-grid" class="product-grid"></div>
+      <p id="no-products-message" class="no-products-message hidden">No products match your search.</p>
+
+      <form id="custom-product-form" class="custom-product-form" novalidate>
+        <h3 class="custom-product-heading">Add custom product</h3>
+        <div class="custom-product-fields">
+          <div class="field">
+            <label for="custom-product-name">Name</label>
+            <input type="text" id="custom-product-name" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="custom-product-price">Price</label>
+            <input type="number" id="custom-product-price" step="0.01" min="0" inputmode="decimal">
+          </div>
+          <div class="field">
+            <label for="custom-product-category">Category</label>
+            <select id="custom-product-category">
+              <option value="Dairy">Dairy</option>
+              <option value="Bakery">Bakery</option>
+              <option value="Fruits">Fruits</option>
+              <option value="Drinks">Drinks</option>
+            </select>
+          </div>
+          <button type="submit" class="button button-primary">Add product</button>
+        </div>
+        <p id="custom-product-message" class="form-message" aria-live="polite"></p>
+      </form>
     </section>
 
-    <section class="order-section" aria-labelledby="order-heading">
-      <h2 id="order-heading">Current Order</h2>
-      <p id="empty-order-message" class="empty-order-message">No products in the order yet.</p>
-      <ul id="order-list" class="order-list"></ul>
+    <div class="side-column">
+      <section class="order-section" aria-labelledby="order-heading">
+        <h2 id="order-heading">Current Order</h2>
+        <p id="empty-order-message" class="empty-order-message">No products in the order yet.</p>
+        <ul id="order-list" class="order-list"></ul>
 
-      <div class="totals">
-        <p class="totals-row">
-          <span>Items</span>
-          <span id="item-count">0</span>
-        </p>
-        <p class="totals-row">
-          <span>Subtotal</span>
-          <span id="subtotal-amount">$0.00</span>
-        </p>
-        <p class="totals-row totals-final">
-          <span>Total to pay</span>
-          <span id="final-amount">$0.00</span>
-        </p>
-      </div>
+        <div class="totals">
+          <p class="totals-row">
+            <span>Items</span>
+            <span id="item-count">0</span>
+          </p>
+          <p class="totals-row">
+            <span>Subtotal</span>
+            <span id="subtotal-amount">$0.00</span>
+          </p>
+          <p id="discount-row" class="totals-row discount-row hidden">
+            <span id="discount-label">Discount</span>
+            <span id="discount-amount">-$0.00</span>
+          </p>
+          <p class="totals-row totals-final">
+            <span>Total to pay</span>
+            <span id="final-amount">$0.00</span>
+          </p>
+        </div>
 
-      <div class="order-actions">
-        <button type="button" id="clear-order-button" class="button button-danger" disabled>Clear Order</button>
-        <button type="button" id="pay-button" class="button button-primary" disabled>Pay</button>
-      </div>
-    </section>
+        <div class="field amount-paid-field">
+          <label for="amount-paid-input">Amount paid</label>
+          <input type="number" id="amount-paid-input" step="0.01" min="0" inputmode="decimal">
+          <p id="amount-paid-error" class="form-message is-error" aria-live="polite"></p>
+        </div>
+
+        <div class="order-actions">
+          <button type="button" id="clear-order-button" class="button button-danger" disabled>Clear Order</button>
+          <button type="button" id="pay-button" class="button button-primary" disabled>Pay</button>
+        </div>
+      </section>
+
+      <section class="history-section" aria-labelledby="history-heading">
+        <h2 id="history-heading">Sales History</h2>
+        <p id="sales-history-empty" class="sales-history-empty">No sales yet.</p>
+        <ul id="sales-history-list" class="sales-history-list"></ul>
+        <p id="session-total-row" class="session-total hidden">
+          <span>Session total</span>
+          <span id="session-total-amount">$0.00</span>
+        </p>
+      </section>
+    </div>
+
+    <!-- Only shown on small screens, where the order panel is far below the products. -->
+    <a href="#order-heading" class="mobile-order-bar">
+      <span>View order</span>
+      <span id="mobile-order-summary">0 items - $0.00</span>
+    </a>
   </main>
 
   <section id="receipt-section" class="receipt-overlay hidden">
     <div class="receipt-card" role="dialog" aria-modal="true" aria-labelledby="receipt-heading">
       <p id="receipt-store-name" class="receipt-store-name"></p>
       <h2 id="receipt-heading" class="receipt-heading">Receipt</h2>
+      <p class="receipt-meta">
+        <span id="receipt-sale-number"></span>
+        <span id="receipt-date-time"></span>
+      </p>
       <ul id="receipt-list" class="receipt-list"></ul>
       <div class="receipt-totals">
         <p class="receipt-totals-row">
@@ -79,9 +159,21 @@
           <span>Subtotal</span>
           <span id="receipt-subtotal">$0.00</span>
         </p>
+        <p id="receipt-discount-row" class="receipt-totals-row hidden">
+          <span id="receipt-discount-label">Discount</span>
+          <span id="receipt-discount">-$0.00</span>
+        </p>
         <p class="receipt-totals-row receipt-final">
           <span>Total to pay</span>
           <span id="receipt-total-amount">$0.00</span>
+        </p>
+        <p class="receipt-totals-row">
+          <span>Amount paid</span>
+          <span id="receipt-amount-paid">$0.00</span>
+        </p>
+        <p class="receipt-totals-row">
+          <span>Change</span>
+          <span id="receipt-change">$0.00</span>
         </p>
       </div>
       <button type="button" id="new-order-button" class="button button-primary receipt-new-order">New Order</button>

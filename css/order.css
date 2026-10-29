@@ -132,3 +132,12 @@
     margin-left: auto;
   }
 }
+
+.discount-row {
+  color: var(--color-primary-dark);
+  font-weight: 600;
+}
+
+.amount-paid-field {
+  margin-top: 16px;
+}
