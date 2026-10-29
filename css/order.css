@@ -66,11 +66,69 @@
 }
 
 .order-row-quantity {
-  color: var(--color-text-muted);
+  min-width: 24px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.quantity-button {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.quantity-button:hover {
+  background-color: var(--color-primary-light);
+  border-color: var(--color-primary);
+}
+
+.remove-button {
+  min-height: 34px;
+  padding: 0 6px;
+  border: none;
+  background: none;
+  color: var(--color-danger);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.remove-button:hover {
+  color: var(--color-danger-dark);
+  text-decoration: underline;
+}
+
+.quantity-button:focus-visible,
+.remove-button:focus-visible {
+  outline: 3px solid var(--color-primary-dark);
+  outline-offset: 2px;
 }
 
 .order-row-line-total {
   min-width: 64px;
   text-align: right;
   font-weight: 700;
+}
+
+/* On narrow screens the name gets its own line so it is not squeezed by the buttons. */
+@media (max-width: 480px) {
+  .order-row {
+    flex-wrap: wrap;
+  }
+
+  .order-row-info {
+    flex-basis: 100%;
+  }
+
+  .order-row-line-total {
+    margin-left: auto;
+  }
 }

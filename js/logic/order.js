@@ -43,3 +43,33 @@ function addProductToOrder(productId) {
 function getOrderItems() {
   return orderItems;
 }
+
+function increaseQuantity(productId) {
+  const orderItemIndex = findOrderItemIndex(productId);
+  if (orderItemIndex === -1) {
+    return;
+  }
+  orderItems[orderItemIndex].quantity = orderItems[orderItemIndex].quantity + 1;
+}
+
+function decreaseQuantity(productId) {
+  const orderItemIndex = findOrderItemIndex(productId);
+  if (orderItemIndex === -1) {
+    return;
+  }
+
+  if (orderItems[orderItemIndex].quantity > 1) {
+    orderItems[orderItemIndex].quantity = orderItems[orderItemIndex].quantity - 1;
+  } else {
+    removeFromOrder(productId);
+  }
+}
+
+function removeFromOrder(productId) {
+  const orderItemIndex = findOrderItemIndex(productId);
+  // splice(-1, 1) would remove the last item, so stop if the product is not in the order.
+  if (orderItemIndex === -1) {
+    return;
+  }
+  orderItems.splice(orderItemIndex, 1);
+}
