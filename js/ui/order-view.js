@@ -1,6 +1,8 @@
 // Draw the order rows and the empty order message.
 const orderList = document.getElementById("order-list");
 const emptyOrderMessage = document.getElementById("empty-order-message");
+const clearOrderButton = document.getElementById("clear-order-button");
+const payButton = document.getElementById("pay-button");
 
 function createDecreaseButton(orderItem) {
   const decreaseButton = document.createElement("button");
@@ -93,4 +95,10 @@ function renderOrder() {
     const orderRow = createOrderRow(currentOrderItems[index]);
     orderList.append(orderRow);
   }
+}
+
+function updateOrderButtons() {
+  const isOrderEmpty = getOrderItems().length === 0;
+  clearOrderButton.disabled = isOrderEmpty;
+  payButton.disabled = isOrderEmpty;
 }

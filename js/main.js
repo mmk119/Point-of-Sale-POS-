@@ -1,6 +1,8 @@
 // Select buttons, connect events, and start the app.
 function refreshOrderPanel() {
   renderOrder();
+  renderTotals();
+  updateOrderButtons();
 }
 
 function handleAddProduct(productId) {
@@ -25,7 +27,7 @@ function handleRemove(productId) {
 
 function startApp() {
   renderProducts(products);
-  renderOrder();
+  refreshOrderPanel();
 }
 
 startApp();
