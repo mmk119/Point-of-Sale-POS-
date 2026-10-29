@@ -21,6 +21,9 @@ function createProductCard(product) {
   addButton.type = "button";
   addButton.classList.add("button", "button-primary", "add-button");
   addButton.textContent = "Add";
+  addButton.addEventListener("click", function () {
+    handleAddProduct(product.id);
+  });
 
   card.append(nameHeading, categoryText, priceText, addButton);
   return card;

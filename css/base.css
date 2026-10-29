@@ -73,3 +73,7 @@ ul {
   color: var(--color-disabled-text);
   cursor: not-allowed;
 }
+
+.hidden {
+  display: none;
+}
