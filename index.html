@@ -96,7 +96,7 @@
           <span>Amount paid</span>
           <span id="amount-paid-display" class="amount">$0.00</span>
         </p>
-        <p class="totals-row">
+        <p class="totals-row change-row">
           <span>Change</span>
           <span id="change-display" class="amount">$0.00</span>
         </p>
@@ -104,12 +104,12 @@
     </section>
 
     <section class="products-section" aria-labelledby="products-heading">
-      <h2 id="products-heading" class="visually-hidden">Products</h2>
+      <h2 id="products-heading" class="section-bar">Products</h2>
       <div id="product-grid" class="product-grid"></div>
       <p id="no-products-message" class="no-products-message hidden">No products match your search.</p>
 
       <details class="custom-product">
-        <summary class="tile tile-blue">Add custom product</summary>
+        <summary class="tile tile-blue">+ Add custom product</summary>
         <form id="custom-product-form" class="custom-product-form" novalidate>
           <div class="field">
             <label for="custom-product-name">Name</label>
@@ -138,7 +138,7 @@
       <div class="payment-area">
         <div class="field amount-paid-field">
           <label for="amount-paid-input">Amount paid</label>
-          <input type="number" id="amount-paid-input" class="text-input amount-input" step="0.01" min="0" inputmode="decimal">
+          <input type="number" id="amount-paid-input" class="text-input amount-input" step="0.01" min="0" inputmode="decimal" placeholder="0.00">
         </div>
         <button type="button" id="exact-amount-button" class="tile tile-blue">Exact</button>
         <p class="tile tile-grey payment-total">
@@ -161,8 +161,8 @@
     <table class="data-table history-table">
       <thead>
         <tr>
-          <th scope="col">Sale</th>
-          <th scope="col">Time</th>
+          <th scope="col" class="col-sale">Sale</th>
+          <th scope="col" class="col-time">Time</th>
           <th scope="col" class="col-number">Items</th>
           <th scope="col" class="col-number">Total</th>
         </tr>

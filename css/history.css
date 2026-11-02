@@ -5,6 +5,14 @@
   font-weight: 700;
 }
 
+.history-table .col-sale {
+  width: 15%;
+}
+
+.history-table .col-time {
+  width: 35%;
+}
+
 .history-table thead .col-number {
   text-align: right;
 }

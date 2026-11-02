@@ -186,6 +186,16 @@ select {
   color: var(--color-tile-green);
 }
 
+/* A dark bar with white text, the same as a table header row. */
+.section-bar {
+  padding: 6px 10px;
+  background-color: var(--color-table-header);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
 .data-table {
   width: 100%;
   border-collapse: collapse;
@@ -204,6 +214,15 @@ select {
   padding: 6px 10px;
   border-bottom: 1px solid var(--color-grid);
   vertical-align: middle;
+}
+
+.data-table tbody tr:hover td {
+  background-color: #f4f4f4;
+}
+
+.data-table tbody .empty-row:hover,
+.data-table tbody tr:hover .empty-row {
+  background-color: transparent;
 }
 
 .data-table .col-number {

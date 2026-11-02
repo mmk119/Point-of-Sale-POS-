@@ -75,6 +75,15 @@ function handlePay() {
   renderSalesHistory();
 }
 
+// Pressing Enter in the amount box pays, so the cashier does not need the mouse.
+// preventDefault stops the same Enter press from also clicking New Order on the receipt.
+function handleAmountKeydown(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    handlePay();
+  }
+}
+
 function handleNewOrder() {
   hideReceipt();
 }
@@ -113,6 +122,9 @@ function connectOrderEvents() {
   });
   amountPaidInput.addEventListener("input", function () {
     updatePaymentLines();
+  });
+  amountPaidInput.addEventListener("keydown", function (event) {
+    handleAmountKeydown(event);
   });
   exactAmountButton.addEventListener("click", function () {
     fillExactAmount();
