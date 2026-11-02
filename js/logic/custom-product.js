@@ -41,7 +41,8 @@ function getCustomProductError(productName, productPrice) {
   if (isProductNameTaken(productName)) {
     return "A product with this name already exists.";
   }
-  if (isNaN(productPrice) || productPrice <= 0) {
+  // Check the rounded price, because that is what gets saved. 0.001 would become $0.00.
+  if (isNaN(productPrice) || roundToCents(productPrice) <= 0) {
     return "Price must be a number greater than 0.";
   }
   if (productPrice > MAX_PRODUCT_PRICE) {

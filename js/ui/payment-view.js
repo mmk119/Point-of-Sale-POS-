@@ -5,7 +5,7 @@ const exactAmountButton = document.getElementById("exact-amount-button");
 const amountPaidDisplay = document.getElementById("amount-paid-display");
 const changeDisplay = document.getElementById("change-display");
 
-// Returns the typed amount as a number, or null if the box is empty or not a number.
+// Returns the typed amount as a number, or null if the box is empty, not a number, or negative.
 function getAmountPaidInputValue() {
   const amountText = amountPaidInput.value.trim();
   if (amountText === "") {
@@ -13,7 +13,7 @@ function getAmountPaidInputValue() {
   }
 
   const amountPaid = Number(amountText);
-  if (isNaN(amountPaid)) {
+  if (isNaN(amountPaid) || amountPaid < 0) {
     return null;
   }
   return amountPaid;
